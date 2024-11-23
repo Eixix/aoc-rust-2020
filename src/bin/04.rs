@@ -8,7 +8,7 @@ fn check_passport(input: &str, check_function: fn(&HashMap<&str, &str>) -> bool)
     let mut count = 0;
 
     for line in input.lines() {
-        if line == "" {
+        if line.is_empty() {
             if check_function(&passport) {
                 count += 1;
             }
@@ -38,7 +38,7 @@ pub fn part_two(input: &str) -> Option<u32> {
     check_passport(input, |passport| {
         (match passport.get("byr") {
             Some(byr) => match byr.parse::<u32>() {
-                Ok(byr) => 1920 <= byr && byr <= 2002,
+                Ok(byr) => (1920..=2002).contains(&byr),
                 Err(_) => {
                     return false;
                 }
@@ -48,7 +48,7 @@ pub fn part_two(input: &str) -> Option<u32> {
             }
         }) && (match passport.get("iyr") {
             Some(iyr) => match iyr.parse::<u32>() {
-                Ok(iyr) => 2010 <= iyr && iyr <= 2020,
+                Ok(iyr) => (2010..=2020).contains(&iyr),
                 Err(_) => {
                     return false;
                 }
@@ -58,7 +58,7 @@ pub fn part_two(input: &str) -> Option<u32> {
             }
         }) && (match passport.get("eyr") {
             Some(eyr) => match eyr.parse::<u32>() {
-                Ok(eyr) => 2020 <= eyr && eyr <= 2030,
+                Ok(eyr) => (2020..=2030).contains(&eyr),
                 Err(_) => {
                     return false;
                 }
@@ -71,8 +71,8 @@ pub fn part_two(input: &str) -> Option<u32> {
                 let (height_str, unit) = hgt.split_at(hgt.len() - 2);
                 let height = height_str.parse::<u32>().unwrap();
                 match unit {
-                    "cm" => 150 <= height && height <= 193,
-                    "in" => 59 <= height && height <= 76,
+                    "cm" => (150..=193).contains(&height),
+                    "in" => (59..=76).contains(&height),
                     _ => false,
                 }
             }

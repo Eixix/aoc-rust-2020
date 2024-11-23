@@ -31,7 +31,7 @@ pub fn part_two(input: &str) -> Option<u32> {
         .collect::<Vec<Vec<char>>>();
 
     Some(
-        vec![(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
+        [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
             .iter()
             .map(|slope| check_slope(matrix.clone(), *slope).unwrap())
             .product(),
