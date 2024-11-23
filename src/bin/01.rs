@@ -15,8 +15,16 @@ pub fn part_two(input: &str) -> Option<u32> {
     for line in input.lines() {
         for line2 in input.lines() {
             for line3 in input.lines() {
-                if line.parse::<u32>().unwrap() + line2.parse::<u32>().unwrap() + line3.parse::<u32>().unwrap() == 2020 {
-                    return Some(line.parse::<u32>().unwrap() * line2.parse::<u32>().unwrap() * line3.parse::<u32>().unwrap());
+                if line.parse::<u32>().unwrap()
+                    + line2.parse::<u32>().unwrap()
+                    + line3.parse::<u32>().unwrap()
+                    == 2020
+                {
+                    return Some(
+                        line.parse::<u32>().unwrap()
+                            * line2.parse::<u32>().unwrap()
+                            * line3.parse::<u32>().unwrap(),
+                    );
                 }
             }
         }

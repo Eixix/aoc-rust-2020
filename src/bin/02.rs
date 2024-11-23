@@ -7,13 +7,18 @@ pub fn part_one(input: &str) -> Option<u32> {
 
     let re = Regex::new(r"(?m)^([0-9]+)-([0-9]+) ([a-z]): ([a-z]+)$").unwrap();
 
-    re.captures_iter(input).map(|c| c.extract()).for_each(|(_, [lower, upper, character, password])| {
-        let amount = password.chars().filter(|c| *c == character.chars().next().unwrap()).count();
+    re.captures_iter(input).map(|c| c.extract()).for_each(
+        |(_, [lower, upper, character, password])| {
+            let amount = password
+                .chars()
+                .filter(|c| *c == character.chars().next().unwrap())
+                .count();
 
-        if amount >= lower.parse().unwrap() && amount <= upper.parse().unwrap() {
-            count += 1;
-        }
-    });
+            if amount >= lower.parse().unwrap() && amount <= upper.parse().unwrap() {
+                count += 1;
+            }
+        },
+    );
 
     Some(count)
 }
@@ -23,11 +28,23 @@ pub fn part_two(input: &str) -> Option<u32> {
 
     let re = Regex::new(r"(?m)^([0-9]+)-([0-9]+) ([a-z]): ([a-z]+)$").unwrap();
 
-    re.captures_iter(input).map(|c| c.extract()).for_each(|(_, [lower, upper, character, password])| {
-        if (password.chars().nth(lower.parse::<usize>().unwrap() - 1).unwrap() == character.chars().next().unwrap()) ^ (password.chars().nth(upper.parse::<usize>().unwrap() - 1).unwrap() == character.chars().next().unwrap()) {
-            count += 1;
-        }
-    });
+    re.captures_iter(input).map(|c| c.extract()).for_each(
+        |(_, [lower, upper, character, password])| {
+            if (password
+                .chars()
+                .nth(lower.parse::<usize>().unwrap() - 1)
+                .unwrap()
+                == character.chars().next().unwrap())
+                ^ (password
+                    .chars()
+                    .nth(upper.parse::<usize>().unwrap() - 1)
+                    .unwrap()
+                    == character.chars().next().unwrap())
+            {
+                count += 1;
+            }
+        },
+    );
 
     Some(count)
 }

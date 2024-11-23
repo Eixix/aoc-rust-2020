@@ -1,7 +1,10 @@
 advent_of_code::solution!(3);
 
 pub fn part_one(input: &str) -> Option<u32> {
-    let matrix = input.lines().map(|s| s.chars().collect()).collect::<Vec<Vec<char>>>();
+    let matrix = input
+        .lines()
+        .map(|s| s.chars().collect())
+        .collect::<Vec<Vec<char>>>();
 
     check_slope(matrix, (3, 1))
 }
@@ -22,9 +25,17 @@ fn check_slope(matrix: Vec<Vec<char>>, slope: (usize, usize)) -> Option<u32> {
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
-    let matrix = input.lines().map(|s| s.chars().collect()).collect::<Vec<Vec<char>>>();
+    let matrix = input
+        .lines()
+        .map(|s| s.chars().collect())
+        .collect::<Vec<Vec<char>>>();
 
-    Some(vec![(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)].iter().map(|slope| check_slope(matrix.clone(), *slope).unwrap()).product())
+    Some(
+        vec![(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
+            .iter()
+            .map(|slope| check_slope(matrix.clone(), *slope).unwrap())
+            .product(),
+    )
 }
 
 #[cfg(test)]

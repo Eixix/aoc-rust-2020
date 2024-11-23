@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use regex::Regex;
+use std::collections::HashMap;
 
 advent_of_code::solution!(4);
 
@@ -29,7 +29,9 @@ fn check_passport(input: &str, check_function: fn(&HashMap<&str, &str>) -> bool)
 }
 
 pub fn part_one(input: &str) -> Option<u32> {
-    check_passport(input, |passport| passport.len() == 8 || (passport.len() == 7 && !passport.contains_key("cid")))
+    check_passport(input, |passport| {
+        passport.len() == 8 || (passport.len() == 7 && !passport.contains_key("cid"))
+    })
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
@@ -37,21 +39,33 @@ pub fn part_two(input: &str) -> Option<u32> {
         (match passport.get("byr") {
             Some(byr) => match byr.parse::<u32>() {
                 Ok(byr) => 1920 <= byr && byr <= 2002,
-                Err(_) => { return false; }
+                Err(_) => {
+                    return false;
+                }
+            },
+            None => {
+                return false;
             }
-            None => { return false; }
         }) && (match passport.get("iyr") {
             Some(iyr) => match iyr.parse::<u32>() {
                 Ok(iyr) => 2010 <= iyr && iyr <= 2020,
-                Err(_) => { return false; }
+                Err(_) => {
+                    return false;
+                }
+            },
+            None => {
+                return false;
             }
-            None => { return false; }
         }) && (match passport.get("eyr") {
             Some(eyr) => match eyr.parse::<u32>() {
                 Ok(eyr) => 2020 <= eyr && eyr <= 2030,
-                Err(_) => { return false; }
+                Err(_) => {
+                    return false;
+                }
+            },
+            None => {
+                return false;
             }
-            None => { return false; }
         }) && (match passport.get("hgt") {
             Some(hgt) => {
                 let (height_str, unit) = hgt.split_at(hgt.len() - 2);
@@ -59,19 +73,29 @@ pub fn part_two(input: &str) -> Option<u32> {
                 match unit {
                     "cm" => 150 <= height && height <= 193,
                     "in" => 59 <= height && height <= 76,
-                    _ => false
+                    _ => false,
                 }
-            },
-            None => { return false; }
+            }
+            None => {
+                return false;
+            }
         }) && (match passport.get("hcl") {
             Some(hcl) => Regex::new(r"#[0-9a-f]{6}").unwrap().is_match(hcl),
-            None => { return false; }
+            None => {
+                return false;
+            }
         }) && (match passport.get("ecl") {
-            Some(ecl) => Regex::new(r"^amb|blu|brn|gry|grn|hzl|oth$").unwrap().is_match(ecl),
-            None => { return false; }
+            Some(ecl) => Regex::new(r"^amb|blu|brn|gry|grn|hzl|oth$")
+                .unwrap()
+                .is_match(ecl),
+            None => {
+                return false;
+            }
         }) && (match passport.get("pid") {
             Some(pid) => Regex::new(r"^[0-9]{9}$").unwrap().is_match(pid),
-            None => { return false; }
+            None => {
+                return false;
+            }
         }) && (passport.len() == 7 && !passport.contains_key("cid") || passport.len() == 8)
     })
 }
